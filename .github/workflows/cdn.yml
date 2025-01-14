@@ -6,6 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set variables
+        run: |
+          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Purge jsdelivr CDN
@@ -16,3 +20,11 @@ jobs:
               curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}"
             fi
           done
+      - name: Publish Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          files: |
+            ./user_result*
