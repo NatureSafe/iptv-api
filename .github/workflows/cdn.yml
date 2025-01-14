@@ -27,4 +27,5 @@ jobs:
           name: ${{ env.RELEASE_NAME }}
           tag_name: ${{ env.TAG_NAME }}
           files: |
-            ./user_result*
+            user_result.m3u
+            user_result.txt
