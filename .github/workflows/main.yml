@@ -116,7 +116,7 @@ jobs:
           cd output || exit 1
           for file in $(ls); do
             if [[ "$file" == user_result* ]]; then
-              curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}"
+              curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@master/output/${file}"
             fi
           done
       
