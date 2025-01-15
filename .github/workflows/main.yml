@@ -100,6 +100,17 @@ jobs:
             git push --force
           fi
 
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          make_latest: true
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          files: |
+            ./output/user_result.m3u
+            ./output/user_result.txt
+
       - name: Purge jsdelivr CDN
         run: |
           cd output || exit 1
@@ -108,13 +119,6 @@ jobs:
               curl -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}"
             fi
           done
-      - name: Publish Release
-        uses: softprops/action-gh-release@v1
-        with:
-          prerelease: false
-          name: ${{ env.RELEASE_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
-          files: |
-            ./user_result*
+      
 
       
